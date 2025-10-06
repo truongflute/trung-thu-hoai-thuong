@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung Thu Vui Vẻ Với Đèn Lồng - Chúc Hoài Thương</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #0c1445 0%, #1a237e 25%, #3f51b5 50%, #ff9800 75%, #ff5722 100%);
+            background-attachment: fixed;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Nền sao lấp lánh */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: sparkle 3s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes sparkle {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-100px); }
+        }
+
+        /* Mặt trăng phát sáng */
+        .moon {
+            position: absolute;
+            top: 10%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #fff 0%, #ffd700 50%, #ffed4e 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.8), inset 0 0 20px rgba(255,255,255,0.3);
+            animation: moon-float 6s ease-in-out infinite alternate;
+            z-index: 1;
+        }
+
+        @keyframes moon-float {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-10px) scale(1.05); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            padding: 20px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5em;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255,215,0,0.8), 2px 2px 4px rgba(0,0,0,0.7);
+            margin-bottom: 30px;
+            animation: fadeInGlow 2.5s ease-in-out;
+            z-index: 4;
+        }
+
+        @keyframes fadeInGlow {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.9); 
+                filter: blur(5px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+                filter: blur(0);
+            }
+        }
+
+        p {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        #falling-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .falling-word {
+            position: absolute;
+            left: 0;
+            top: -10%;
+            opacity: 1;
+            white-space: nowrap;
+            animation: fall linear forwards;
+            transform: translateX(0);
+            font-family: 'Dancing Script', cursive;
+            font-weight: 400;
+        }
+
+        @keyframes fall {
+            to {
+                top: 110%;
+                opacity: 0;
+            }
+        }
+
+        /* Định nghĩa drift và gentleFloat trong CSS */
+        @keyframes drift {
+            0%, 100% { transform: translateX(0) rotate(-8deg); }
+            50% { transform: translateX(10px) rotate(8deg); }
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0) rotate(var(--rotation, 0deg)); }
+            100% { transform: translateY(-5px) rotate(var(--rotation, 0deg)); }
+        }
+
+        /* Hiệu ứng đèn lồng treo - z-index thấp */
+        #lanterns {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0.5;
+        }
+
+        .lantern {
+            position: absolute;
+            top: 20%;
+            width: 80px;
+            height: 100px;
+            transform-origin: top center;
+            animation: swing 5s ease-in-out infinite, drift 20s linear infinite;
+        }
+
+        .string {
+            position: absolute;
+            top: -140px;
+            left: 50%;
+            width: 4px;
+            height: 140px;
+            background: linear-gradient(to bottom, transparent, #8B4513, #A0522D);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .lantern-body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 70px;
+            height: 80px;
+            background: linear-gradient(145deg, #FF6B35, #F7931E, #FF8C00);
+            border-radius: 35px 35px 20px 20px;
+            transform: translateX(-50%);
+            box-shadow: 
+                0 10px 20px rgba(0,0,0,0.5),
+                inset 0 2px 4px rgba(255,255,255,0.3);
+            position: relative;
+        }
+
+        .lantern-body::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            width: 25px;
+            height: 12px;
+            background: #8B4513;
+            border-radius: 50% 50% 0 0;
+            transform: translateX(-50%);
+        }
+
+        .inner-light {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(ellipse, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: glow 1.5s ease-in-out infinite alternate;
+            opacity: 1;
+            box-shadow: 0 0 30px rgba(255,215,0,0.8);
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        @keyframes glow {
+            0% { 
+                opacity: 0.8; 
+                transform: translateX(-50%) scale(0.95); 
+                box-shadow: 0 0 20px rgba(255,215,0,0.5);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(-50%) scale(1.05); 
+                box-shadow: 0 0 40px rgba(255,215,0,1);
+            }
+        }
+
+        /* Loại đèn lồng hình sao */
+        .lantern-star {
+            position: absolute;
+            top: 25%;
+            width: 70px;
+            height: 70px;
+            transform-origin: top center;
+            animation: swing 5s ease-in-out infinite, drift 20s linear infinite;
+        }
+
+        .star-body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #FF1493, #FF69B4, #FF1493);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            transform: translateX(-50%);
+            box-shadow: 
+                0 10px 20px rgba(0,0,0,0.5),
+                inset 0 2px 4px rgba(255,255,255,0.3);
+            position: relative;
+        }
+
+        .star-light {
+            position: absolute;
+            top: 18px;
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(ellipse, #FFD700 0%, #FF69B4 50%, #FF1493 100%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: glow 1.5s ease-in-out infinite alternate;
+            opacity: 1;
+            box-shadow: 0 0 30px rgba(255,215,0,0.8);
+        }
+
+        .star-string {
+            position: absolute;
+            top: -120px;
+            left: 50%;
+            width: 3px;
+            height: 120px;
+            background: linear-gradient(to bottom, transparent, #8B4513);
+            transform: translateX(-50%);
+        }
+
+        /* Hiệu ứng rước đèn - z-index giữa */
+        #procession {
+            position: absolute;
+            bottom: 10%;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+            z-index: 1.5;
+            overflow: hidden;
+        }
+
+        .procession-lantern {
+            position: absolute;
+            bottom: 20px;
+            width: 50px;
+            height: 60px;
+            animation: processionMove 15s linear infinite;
+        }
+
+        .procession-string {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, #8B4513);
+            transform: translateX(-50%);
+        }
+
+        .procession-body {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 40px;
+            height: 50px;
+            background: linear-gradient(145deg, #FF4500, #FF6347, #FF8C00);
+            border-radius: 20px 20px 10px 10px;
+            transform: translateX(-50%);
+            box-shadow: 
+                0 5px 10px rgba(0,0,0,0.3),
+                inset 0 1px 2px rgba(255,255,255,0.2);
+        }
+
+        .procession-body::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            width: 15px;
+            height: 8px;
+            background: #8B4513;
+            border-radius: 50% 50% 0 0;
+            transform: translateX(-50%);
+        }
+
+        .procession-light {
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(ellipse, #FFD700 0%, #FFA500 50%, #FF4500 100%);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            animation: glow 1s ease-in-out infinite alternate;
+            opacity: 1;
+            box-shadow: 0 0 15px rgba(255,215,0,0.7);
+        }
+
+        @keyframes processionMove {
+            0% {
+                right: -60px;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                right: 100%;
+                transform: translateY(5px) rotate(5deg);
+            }
+        }
+
+        /* Nút điều khiển nhạc */
+        #music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 5;
+            background: rgba(255, 215, 0, 0.8);
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background 0.3s;
+        }
+
+        #music-control:hover {
+            background: rgba(255, 215, 0, 1);
+        }
+
+        /* Thông báo autoplay */
+        #autoplay-notice {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 5;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9em;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: fadeInNotice 0.5s ease-in;
+            max-width: 250px;
+        }
+
+        @keyframes fadeInNotice {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Ẩn audio player mặc định */
+        audio {
+            display: none;
+        }
+
+        /* Responsive cho mobile */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+                padding: 0 10px;
+            }
+
+            p {
+                font-size: 1em;
+            }
+
+            .falling-word {
+                font-size: 0.7em !important;
+            }
+
+            .lantern {
+                width: 60px;
+                height: 80px;
+                top: 15%;
+            }
+
+            .lantern-body {
+                width: 55px;
+                height: 65px;
+            }
+
+            .inner-light {
+                width: 32px;
+                height: 32px;
+                top: 15px;
+            }
+
+            .lantern-star {
+                width: 55px;
+                height: 55px;
+                top: 20%;
+            }
+
+            .star-body {
+                width: 55px;
+                height: 55px;
+            }
+
+            .procession-lantern {
+                width: 40px;
+                height: 50px;
+                bottom: 15px;
+            }
+
+            .procession-body {
+                width: 32px;
+                height: 40px;
+            }
+
+            .procession-light {
+                width: 20px;
+                height: 20px;
+                top: 10px;
+            }
+
+            .moon {
+                width: 60px;
+                height: 60px;
+                top: 5%;
+                right: 5%;
+            }
+
+            #music-control {
+                top: 10px;
+                right: 10px;
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+
+            #autoplay-notice {
+                top: 70px;
+                right: 10px;
+                max-width: 200px;
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .lantern {
+                width: 50px;
+                height: 70px;
+                top: 10%;
+            }
+
+            .lantern-star {
+                width: 45px;
+                height: 45px;
+                top: 15%;
+            }
+
+            .procession-lantern {
+                width: 30px;
+                height: 40px;
+            }
+
+            .moon {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Thêm audio background -->
+    <audio id="bgMusic" loop preload="auto" autoplay muted>
+        <source src="./chiec-den-ong-sao-remix-khong-loi-49-remix-tv.mp3" type="audio/mpeg">
+        <!-- Thay 'music/trung-thu.mp3' bằng đường dẫn file MP3 của bạn (ví dụ: tải từ Zing MP3 hoặc Pixabay) -->
+        Trình duyệt của bạn không hỗ trợ audio.
+    </audio>
+
+    <!-- Nút play/pause nhạc -->
+    <button id="music-control" onclick="toggleMusic()">⏸️ Tạm Dừng Nhạc</button>
+
+    <!-- Thông báo autoplay -->
+    <div id="autoplay-notice">Nhạc đang phát! Click bất kỳ đâu để bật âm thanh 🎵</div>
+
+    <div class="moon"></div>
+    <div class="container">
+        <h1>Chúc Mừng Trung Thu Hoài Thương Vui Vẻ!</h1>
+        <p>Chúc Hoài Thương một mùa Trung Thu tràn đầy niềm vui, hạnh phúc bên gia đình và những chiếc đèn lồng lung linh.</p>
+        <div id="falling-text"></div>
+        <div id="lanterns"></div>
+        <div id="procession"></div>
+    </div>
+
+    <script>
+        const words = [
+            'Trung Thu', 'Mặt Trăng', 'Bánh Trung Thu', 'Đèn Lồng', 
+            'Rằm Tháng Tám', 'Vui Vẻ', 'Hạnh Phúc', 'Gia Đình', 
+            'Trẻ Em', 'Lễ Hội', 'Sao Sáng', 'Hát Ru', 'Lồng Đèn', 'Bánh Nướng',
+            'Rước Đèn', 'Văn Chương', 'Con Cò', 'Chị Hằng', 'Hoài Thương',
+            'Chúc Vui', 'Yêu Thương', 'Rực Rỡ', 'Ấm Áp'
+        ];
+
+        const fallingContainer = document.getElementById('falling-text');
+        const lanternsContainer = document.getElementById('lanterns');
+        const processionContainer = document.getElementById('procession');
+        const autoplayNotice = document.getElementById('autoplay-notice');
+
+        // Chữ rơi
+        function createFallingWord() {
+            const word = words[Math.floor(Math.random() * words.length)];
+            const span = document.createElement('span');
+            span.className = 'falling-word';
+            span.textContent = word;
+            
+            const size = Math.random() * 60 + 20;
+            span.style.fontSize = size + 'px';
+            span.style.color = `hsl(${Math.random() * 60 + 20}, 80%, ${50 + Math.random() * 40}%)`;
+            span.style.left = Math.random() * 100 + '%';
+            const duration = Math.random() * 12 + 8 + (size / 10);
+            span.style.animationDuration = duration + 's';
+            span.style.animationDelay = Math.random() * 4 + 's';
+            const rotation = Math.random() * 20 - 10;
+            span.style.setProperty('--rotation', rotation + 'deg');
+            span.style.transform = `rotate(${rotation}deg)`;
+            span.style.animation += ', gentleFloat 2s ease-in-out infinite alternate';
+
+            fallingContainer.appendChild(span);
+
+            setTimeout(() => {
+                if (span.parentNode) {
+                    span.remove();
+                }
+            }, duration * 1000 + 2000);
+        }
+
+        setInterval(createFallingWord, 500 + Math.random() * 800);
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createFallingWord, i * 300);
+        }
+
+        // Đèn lồng treo
+        function createLantern() {
+            const lantern = document.createElement('div');
+            lantern.className = 'lantern';
+
+            const string = document.createElement('div');
+            string.className = 'string';
+
+            const body = document.createElement('div');
+            body.className = 'lantern-body';
+
+            const light = document.createElement('div');
+            light.className = 'inner-light';
+
+            lantern.appendChild(string);
+            lantern.appendChild(body);
+            body.appendChild(light);
+
+            lantern.style.left = Math.random() * 95 + '%';
+            lantern.style.top = (Math.random() * 20 + 10) + '%';
+            lantern.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            lantern.style.animationDelay = Math.random() * 3 + 's';
+
+            lanternsContainer.appendChild(lantern);
+        }
+
+        function createStarLantern() {
+            const lantern = document.createElement('div');
+            lantern.className = 'lantern-star';
+
+            const string = document.createElement('div');
+            string.className = 'star-string';
+
+            const body = document.createElement('div');
+            body.className = 'star-body';
+
+            const light = document.createElement('div');
+            light.className = 'star-light';
+
+            lantern.appendChild(string);
+            lantern.appendChild(body);
+            body.appendChild(light);
+
+            lantern.style.left = Math.random() * 95 + '%';
+            lantern.style.top = (Math.random() * 30 + 15) + '%';
+            lantern.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            lantern.style.animationDelay = Math.random() * 3 + 's';
+
+            lanternsContainer.appendChild(lantern);
+        }
+
+        const numLanterns = 8;
+        for (let i = 0; i < numLanterns; i++) {
+            setTimeout(() => {
+                if (Math.random() > 0.6) {
+                    createLantern();
+                } else {
+                    createStarLantern();
+                }
+            }, i * 500);
+        }
+
+        // Hiệu ứng rước đèn
+        function createProcessionLantern(delay = 0) {
+            const lantern = document.createElement('div');
+            lantern.className = 'procession-lantern';
+            lantern.style.animationDelay = delay + 's';
+
+            const string = document.createElement('div');
+            string.className = 'procession-string';
+
+            const body = document.createElement('div');
+            body.className = 'procession-body';
+
+            const light = document.createElement('div');
+            light.className = 'procession-light';
+
+            lantern.appendChild(string);
+            lantern.appendChild(body);
+            body.appendChild(light);
+
+            lantern.style.right = '-60px';
+
+            processionContainer.appendChild(lantern);
+        }
+
+        const numProcession = Math.floor(Math.random() * 6) + 10;
+        for (let i = 0; i < numProcession; i++) {
+            const delay = i * 1.2;
+            setTimeout(() => createProcessionLantern(delay), 1000);
+        }
+
+        setInterval(() => {
+            const newNum = Math.floor(Math.random() * 4) + 6;
+            for (let i = 0; i < newNum; i++) {
+                const delay = i * 1.2;
+                setTimeout(() => createProcessionLantern(delay), 1000);
+            }
+        }, 20000);
+
+        // Điều khiển nhạc - Cải thiện auto play với thông báo
+        const bgMusic = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('music-control');
+        let isPlaying = false;
+        let isUnmuted = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicControl.textContent = '▶️ Phát Nhạc Trung Thu';
+                isPlaying = false;
+                autoplayNotice.style.display = 'block';
+            } else {
+                bgMusic.play().catch(e => {
+                    alert('Không thể phát nhạc! Kiểm tra file MP3 hoặc trình duyệt.');
+                });
+                musicControl.textContent = '⏸️ Tạm Dừng Nhạc';
+                isPlaying = true;
+                if (!isUnmuted) {
+                    autoplayNotice.style.display = 'block';
+                } else {
+                    autoplayNotice.style.display = 'none';
+                }
+            }
+        }
+
+        // Thử auto play khi load
+        document.addEventListener('DOMContentLoaded', function() {
+            bgMusic.volume = 0.5;
+            bgMusic.muted = true;
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicControl.textContent = '⏸️ Tạm Dừng Nhạc';
+                autoplayNotice.style.display = 'block';
+                // Unmute sau user interaction
+                const unmuteHandler = function() {
+                    bgMusic.muted = false;
+                    isUnmuted = true;
+                    autoplayNotice.style.display = 'none';
+                    document.removeEventListener('click', unmuteHandler);
+                    document.removeEventListener('touchstart', unmuteHandler);
+                };
+                document.addEventListener('click', unmuteHandler, { once: true });
+                document.addEventListener('touchstart', unmuteHandler, { once: true });
+            }).catch(() => {
+                musicControl.textContent = '▶️ Phát Nhạc Trung Thu';
+                autoplayNotice.innerHTML = 'Click nút để phát nhạc Trung Thu! 🎵';
+            });
+        });
+    </script>
+</body>
+</html>
